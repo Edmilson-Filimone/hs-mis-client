@@ -20,10 +20,10 @@ function Home() {
   const navigate = useNavigate()
  
   //STATES FOR CARDS
-  const [isBusy, setIsBusy] = useState(true)
+  const [isBusy, setIsBusy] = useState(false) //desactivar mais tarde 
   const [nFacility, setNFacility] = useState(0)
   const [nFacility_b, setNFacility_b] = useState(0)
-  const[newData, setNewData] = useState({total:0, positive:0, resistant:0})
+  const[newData, setNewData] = useState({total:0, positive:0, prevalence:0})
   const [oldData, setOldData] = useState({total:0, positive:0, resistant:0})
  
   //STATES FOR CHARTS & TABLE
@@ -34,7 +34,7 @@ function Home() {
   const [tableData, setTableData] = useState([])
  
   //OTHER & STATES
-  const listOfMonths = ["January", "Febuary", "March", "April", "May","June", "July", "August", "September", "October", "November", "December"]
+  const listOfMonths = ["January", "February", "March", "April", "May","June", "July", "August", "September", "October", "November", "December"]
   const index = (param) => Math.abs(listOfMonths.indexOf(param))
   const date = new Date()
   const[MonthYear, setMonthYear] = useState({month:date.toLocaleString('en', {month:'long'}), year:date.getYear() + 1900})
@@ -76,40 +76,24 @@ function Home() {
         //charts configurations and data
         const bar = useProcessChartData(dataA.data, 'bar', navigate) //Bar
         const line = useProcessChartData(dataB.data, 'line', navigate) //line
-        setRawBarData(bar)
+        //como filtrar os dados por admin level???
+        setRawBarData(bar.province)
         setRawLineData(line)
-        setBarData({data:bar.positive_, label:'Positive'}) //initial value
+        setBarData({data:bar['district'].positive, label:'Positive'}) //initial value
         setLineData({data:line.totalPositive, label:'Positive'})
-
-        //TABLE DATA
-        let tbData = [...bar.total_]
-
-        tbData.forEach(q => {
-          q.positive = 0
-          q.negative = 0
-          q.resistance = 0
-
-          bar.positive_.forEach(p => {
-              if(q.facility === p.facility){
-                q.positive = p.value_sum
-                }
-            })  
-          bar.resistant_.forEach(r => {
-              if(q.facility === r.facility){
-                q.resistance = r.value_sum
-                }
-            })
-          bar.negative_.forEach(n => {
-              if(q.facility === n.facility){
-                q.negative = n.value_sum
-                }
-            })
-        });
-
-        setTableData(tbData)
+        setTableData(bar['districtTable'])
               
       })
   )
+//TESTES
+setNewData({"total": 8,"positive": 5,"negative": 3, "prevalence": 62.5})
+setOldData({"total": 8,"positive": 5,"negative": 3, "prevalence": 62.5})
+
+const bar = { "province": { "total": [ { "name": "Gaza", "value": 4 }, { "name": "Maputo", "value": 4 } ], "positive": [ { "name": "Gaza", "value": 3 }, { "name": "Maputo", "value": 2 } ], "negative": [ { "name": "Gaza", "value": 1 }, { "name": "Maputo", "value": 2 } ], "prevalence": [ { "name": "Gaza", "value": 75 }, { "name": "Maputo", "value": 50 } ] }, "district": { "total": [ { "name": "Massingire", "value": 2 }, { "name": "Massia", "value": 2 }, { "name": "Manhica", "value": 1 }, { "name": "Marracuene", "value": 3 } ], "positive": [ { "name": "Massingire", "value": 2 }, { "name": "Massia", "value": 1 }, { "name": "Manhica", "value": 0 }, { "name": "Marracuene", "value": 2 } ], "negative": [ { "name": "Massingire", "value": 0 }, { "name": "Massia", "value": 1 }, { "name": "Manhica", "value": 1 }, { "name": "Marracuene", "value": 1 } ], "prevalence": [ { "name": "Massingire", "value": 100 }, { "name": "Massia", "value": 50 }, { "name": "Manhica", "value": 0 }, { "name": "Marracuene", "value": 66.66666666666666 } ] }, "facility": { "total": [ { "name": "Hospital A", "value": 2 }, { "name": "Hospital B", "value": 2 }, { "name": "Hospital C", "value": 1 }, { "name": "Hospital D", "value": 3 } ], "positive": [ { "name": "Hospital A", "value": 2 }, { "name": "Hospital B", "value": 1 }, { "name": "Hospital C", "value": 0 }, { "name": "Hospital D", "value": 2 } ], "negative": [ { "name": "Hospital A", "value": 0 }, { "name": "Hospital B", "value": 1 }, { "name": "Hospital C", "value": 1 }, { "name": "Hospital D", "value": 1 } ], "prevalence": [ { "name": "Hospital A", "value": 100 }, { "name": "Hospital B", "value": 50 }, { "name": "Hospital C", "value": 0 }, { "name": "Hospital D", "value": 66.66666666666666 } ] }, "provinceTable": [ { "name": "Gaza", "value": 4, "positive": 3, "negative": 1, "prevalence": 75 }, { "name": "Maputo", "value": 4, "positive": 2, "negative": 2, "prevalence": 50 } ], "districtTable": [ { "name": "Massingire", "value": 2, "positive": 2, "negative": 0, "prevalence": 100 }, { "name": "Massia", "value": 2, "positive": 1, "negative": 1, "prevalence": 50 }, { "name": "Manhica", "value": 1, "positive": 0, "negative": 1, "prevalence": 0 }, { "name": "Marracuene", "value": 3, "positive": 2, "negative": 1, "prevalence": 66.66666666666666 } ], "facilityTable": [ { "name": "Hospital A", "value": 2, "positive": 2, "negative": 0, "prevalence": 100 }, { "name": "Hospital B", "value": 2, "positive": 1, "negative": 1, "prevalence": 50 }, { "name": "Hospital C", "value": 1, "positive": 0, "negative": 1, "prevalence": 0 }, { "name": "Hospital D", "value": 3, "positive": 2, "negative": 1, "prevalence": 66.66666666666666 } ] }
+
+setBarData(bar['district'].positive)
+setTableData(bar['districtTable'])
+
 }
 
   //USE EFFECT
@@ -129,13 +113,13 @@ const changeData = (category, type) => {
   if(type == 'bar'){
     switch (category) {
       case "Total":
-        setBarData({data: rawBarData.total_, label: 'Total'})
+        setBarData({data: rawBarData.total, label: 'Total'})
         break;
       case "Positive":
-        setBarData({data: rawBarData.positive_, label: 'Positive'})
+        setBarData({data: rawBarData.positive, label: 'Positive'})
       break;
-      case "Resistant":
-        setBarData({data: rawBarData.resistant_, label: 'Resistant'})
+      case "Prevalence":
+        setBarData({data: rawBarData.resistant, label: 'Prevalence'})
       break;
     }
   }
@@ -148,8 +132,8 @@ const changeData = (category, type) => {
       case "Positive":
         setLineData({data: rawLineData.totalPositive, label: 'Positive'})
       break;
-      case "Resistant":
-        setLineData({data: rawLineData.totalResistant, label: 'Resistant'})
+      case "Prevalence":
+        setLineData({data: rawLineData.totalResistant, label: 'Prevalence'})
       break;
     }
   }
@@ -163,11 +147,11 @@ const changeData = (category, type) => {
 
 
 const finalBarData = {
-                labels: barData?.data?.map((it)=> it.facilityAcronym),
+                labels: barData?.map((it)=> it.name),
                 datasets:[
                   {
                     label:`${barData?.label} samples`,
-                    data: barData?.data.map((it)=> it.value_sum) ,
+                    data: barData?.map((it)=> it.value) ,
                     backgroundColor: 'white',
                     borderColor:'white',
                     borderRadius: Number.MAX_VALUE,
@@ -207,10 +191,10 @@ const onSubmit = (e)=>{
     <section>
       <span className='bg-white py-1 px-2 rounded-md shadow-md md:float-right text-sm text-text-color cursor-context-menu' title='Date'>{`${MonthYear.month} - ${MonthYear.year}`}</span>
       <section className="grid gap-5 md:w-fit xl:w-full md:grid-cols-2 xl:flex xl:justify-between xl:mx-auto max-w-[2400px]">
-        <Card label={'Total Facilities'} value={nFacility} balance={nFacility - nFacility_b} icon={<HomeModernIcon width={"25px"}/>} iconBg={'bg-dark'}/>
-        <Card label={'Number of Samples'} value={newData.total} balance={newData.total-oldData.total} icon={<ChartBarIcon width={"25px"}/>} iconBg={'bg-blue'}/>
-        <Card label={'Positives Samples'} value={newData.positive} balance={newData.positive-oldData.positive} icon={<UserPlusIcon width={"25px"}/>} iconBg={'bg-green'}/>
-        <Card label={'Resistants Samples'} value={newData.resistant} balance={newData.resistant-oldData.resistant} icon={<FaBiohazard className='text-2xl'/>} iconBg={'bg-pink'}/>
+        <Card label={'Prevalence (%)'} value={newData.prevalence} balance={newData.prevalence - oldData.prevalence} icon={<HomeModernIcon width={"25px"}/>} iconBg={'bg-dark'}/>
+        <Card label={'Incidence'} value={newData.positive} balance={newData.positive-oldData.positive} icon={<ChartBarIcon width={"25px"}/>} iconBg={'bg-blue'}/>
+        <Card label={'Mother to Child cases'} value={5} balance={3} icon={<UserPlusIcon width={"25px"}/>} iconBg={'bg-green'}/>
+        <Card label={'People in TARV'} value={32} balance={22} icon={<FaBiohazard className='text-2xl'/>} iconBg={'bg-pink'}/>
       </section>
       {!isBusy && <section className= 'my-6 flex flex-wrap space-y-10 xl:space-y-0 gap-5 xl:flex-nowrap xl:mx-auto max-w-[2400px]'>
         <ChartContainer type='bar' data={finalBarData} options={barOps} background='bg-blue' changeData={changeData}/>

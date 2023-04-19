@@ -3,13 +3,13 @@ import { useMemo } from "react";
 
 export const tableColumns =  [
     {
-      accessorKey:"facility",
-      header:"Facility",
+      accessorKey:"name",
+      header:"Name",
       size:180,
       minSize:260
     },
     {
-      accessorKey:'value_sum',
+      accessorKey:'value',
       header:'Total',
       size:30,
       minSize:30
@@ -23,15 +23,15 @@ export const tableColumns =  [
       
     },
     {
-      accessorKey:'resistance',
-      header:'Resistance',
+      accessorKey:'negative',
+      header:'Negative',
       size:30,
       minSize:20
       
     },
     {
-      accessorKey:'negative',
-      header:'Negative',
+      accessorKey:'prevalence',
+      header:'Prevalence',
       size:30,
       minSize:30
     }
