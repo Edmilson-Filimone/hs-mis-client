@@ -1,5 +1,4 @@
 import React from 'react'
-import { Chart } from 'react-chartjs-2'
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -12,8 +11,8 @@ import {
     Legend,
     ArcElement,
     RadialLinearScale
-  } from 'chart.js';
-  
+  } from 'chart.js/auto';
+  import { Chart } from 'react-chartjs-2'
   ChartJS.register(
     RadialLinearScale,
     ArcElement,
