@@ -89,10 +89,12 @@ function Home() {
 setNewData({"total": 8,"positive": 5,"negative": 3, "prevalence": 62.5})
 setOldData({"total": 8,"positive": 5,"negative": 3, "prevalence": 62.5})
 
+const line = { "total": [ { "month": "April", "year": 2023, "value": 8 } ], "positive": [ { "month": "April", "year": 2023, "value": 5 } ], "negative": [ { "month": "April", "year": 2023, "value": 3 } ], "prevalence": [ { "month": "April", "year": 2023, "value": 62.5 } ] }
 const bar = { "province": { "total": [ { "name": "Gaza", "value": 4 }, { "name": "Maputo", "value": 4 } ], "positive": [ { "name": "Gaza", "value": 3 }, { "name": "Maputo", "value": 2 } ], "negative": [ { "name": "Gaza", "value": 1 }, { "name": "Maputo", "value": 2 } ], "prevalence": [ { "name": "Gaza", "value": 75 }, { "name": "Maputo", "value": 50 } ] }, "district": { "total": [ { "name": "Massingire", "value": 2 }, { "name": "Massia", "value": 2 }, { "name": "Manhica", "value": 1 }, { "name": "Marracuene", "value": 3 } ], "positive": [ { "name": "Massingire", "value": 2 }, { "name": "Massia", "value": 1 }, { "name": "Manhica", "value": 0 }, { "name": "Marracuene", "value": 2 } ], "negative": [ { "name": "Massingire", "value": 0 }, { "name": "Massia", "value": 1 }, { "name": "Manhica", "value": 1 }, { "name": "Marracuene", "value": 1 } ], "prevalence": [ { "name": "Massingire", "value": 100 }, { "name": "Massia", "value": 50 }, { "name": "Manhica", "value": 0 }, { "name": "Marracuene", "value": 66.66666666666666 } ] }, "facility": { "total": [ { "name": "Hospital A", "value": 2 }, { "name": "Hospital B", "value": 2 }, { "name": "Hospital C", "value": 1 }, { "name": "Hospital D", "value": 3 } ], "positive": [ { "name": "Hospital A", "value": 2 }, { "name": "Hospital B", "value": 1 }, { "name": "Hospital C", "value": 0 }, { "name": "Hospital D", "value": 2 } ], "negative": [ { "name": "Hospital A", "value": 0 }, { "name": "Hospital B", "value": 1 }, { "name": "Hospital C", "value": 1 }, { "name": "Hospital D", "value": 1 } ], "prevalence": [ { "name": "Hospital A", "value": 100 }, { "name": "Hospital B", "value": 50 }, { "name": "Hospital C", "value": 0 }, { "name": "Hospital D", "value": 66.66666666666666 } ] }, "provinceTable": [ { "name": "Gaza", "value": 4, "positive": 3, "negative": 1, "prevalence": 75 }, { "name": "Maputo", "value": 4, "positive": 2, "negative": 2, "prevalence": 50 } ], "districtTable": [ { "name": "Massingire", "value": 2, "positive": 2, "negative": 0, "prevalence": 100 }, { "name": "Massia", "value": 2, "positive": 1, "negative": 1, "prevalence": 50 }, { "name": "Manhica", "value": 1, "positive": 0, "negative": 1, "prevalence": 0 }, { "name": "Marracuene", "value": 3, "positive": 2, "negative": 1, "prevalence": 66.66666666666666 } ], "facilityTable": [ { "name": "Hospital A", "value": 2, "positive": 2, "negative": 0, "prevalence": 100 }, { "name": "Hospital B", "value": 2, "positive": 1, "negative": 1, "prevalence": 50 }, { "name": "Hospital C", "value": 1, "positive": 0, "negative": 1, "prevalence": 0 }, { "name": "Hospital D", "value": 3, "positive": 2, "negative": 1, "prevalence": 66.66666666666666 } ] }
 
 setBarData(bar['district'].positive)
 setTableData(bar['districtTable'])
+setLineData(line.positive)
 
 }
 
@@ -150,7 +152,7 @@ const finalBarData = {
                 labels: barData?.map((it)=> it.name),
                 datasets:[
                   {
-                    label:`${barData?.label} samples`,
+                    label:` Result `,
                     data: barData?.map((it)=> it.value) ,
                     backgroundColor: 'white',
                     borderColor:'white',
@@ -161,11 +163,11 @@ const finalBarData = {
               }
 
 const finalLineData = {
-                  labels: lineData?.data?.map((it)=> it.month.substring(0,3)),
+                  labels: lineData?.map((it)=> it.month.substring(0,3)),
                   datasets:[
                     {
-                      label:`${lineData?.label} samples per month`,
-                      data: lineData?.data?.map((it)=> it.value_sum) ,
+                      label:` ${lineData[0].year} `,
+                      data: lineData?.map((it)=> it.value) ,
                       backgroundColor: 'white',
                       borderColor:'white',
                       borderRadius: Number.MAX_VALUE,
