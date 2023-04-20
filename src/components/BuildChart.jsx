@@ -11,7 +11,7 @@ import {
     Legend,
     ArcElement,
     RadialLinearScale
-  } from 'chart.js';
+  } from 'chart.js/auto';
   import { Chart } from 'react-chartjs-2'
   ChartJS.register(
     RadialLinearScale,
