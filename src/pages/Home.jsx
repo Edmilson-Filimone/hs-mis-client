@@ -16,7 +16,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import useProcessLineChartData from '../hooks/useProcessLineChartData '
 
 
-function Home() {
+function Home({filter}) {
   //OTHERS HOOKS
   const navigate = useNavigate()
  
@@ -82,7 +82,7 @@ function Home() {
         setRawLineData(line)
         setBarData({data:bar['district'].positive, label:'Positive'}) //initial value
         setLineData({data:line.totalPositive, label:'Positive'})
-        setTableData(bar['districtTable'])
+        setTableData(bar['district'])
               
       })
   )
@@ -99,16 +99,16 @@ setOldData(useProcessData(query.data))
 const line = useProcessLineChartData(queryLine.data, navigate)
 const bar = useProcessChartData(query.data, 'bar', navigate)
 const table = useProcessChartData(query.data, 'table', navigate)
-setBarData(bar['district'].positive)
-setTableData(table['district'])
+setBarData(bar[filter].positive)
+setTableData(table[filter])
 setLineData(line.positive)
-
+console.log(filter)
 }
 
   //USE EFFECT
   useEffect(()=>{
     workTask()
-  },[MonthYear])
+  },[MonthYear, filter])
 
     //CONDITIONAL RENDERING
     if(isBusy){
@@ -198,7 +198,7 @@ const onSubmit = (e)=>{
 
   return (
     <section>
-      <span className='bg-white py-1 px-2 rounded-md shadow-md md:float-right text-sm text-text-color cursor-context-menu' title='Date'>{`${MonthYear.month} - ${MonthYear.year}`}</span>
+      <span className='bg-white py-1 px-2 rounded-md shadow-md md:float-right text-sm text-text-color cursor-context-menu' title='Date'><span className='capitalize'>{filter}</span>{` • ${MonthYear.month} - ${MonthYear.year}`}</span>
       <section className="grid gap-5 md:w-fit xl:w-full md:grid-cols-2 xl:flex xl:justify-between xl:mx-auto max-w-[2400px]">
         <Card label={'Prevalence (%)'} value={newData.prevalence} balance={newData.prevalence - oldData.prevalence} icon={<HomeModernIcon width={"25px"}/>} iconBg={'bg-dark'}/>
         <Card label={'Incidence'} value={newData.positive} balance={newData.positive-oldData.positive} icon={<ChartBarIcon width={"25px"}/>} iconBg={'bg-blue'}/>

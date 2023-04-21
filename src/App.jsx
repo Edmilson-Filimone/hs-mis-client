@@ -26,15 +26,18 @@ function App() {
   const changeLayout = (collapseState) => {
     setCollapse(collapseState)
   }
+  //Global state to help filter data - the function will be triggered in child component
+  const [filter, setFilter] = useState('district')
+  const changeFilter = (data) => { setFilter(data) }
   return (
     <>
     <BrowserRouter>
     <section className={`md:grid ${collapse} m-5 gap-4 grid-rows-size`}>
       <div className="col-span-1 row-span-3"><Sidebar layout={changeLayout}/></div>
       <section className="col-start-2 col-span-4 row-span-full">
-        <Navbar/>
+        <Navbar changeFilter={changeFilter}/>
         <Routes>
-          <Route path="/" element={<Home/>}></Route>
+          <Route path="/" element={<Home filter={filter}/>}></Route>
           <Route path="/report" element={<Report/>}></Route>
           <Route path="/map" element={<Maps/>}></Route>
           <Route path="/sign-in" element={<Login/>}></Route>

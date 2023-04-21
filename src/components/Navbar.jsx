@@ -5,7 +5,7 @@ import { auth } from '../../firebase.config'
 import { toast } from 'react-toastify'
 import { AiOutlineClose } from 'react-icons/ai'
 
-function Navbar() {
+function Navbar({changeFilter}) {
   //Form States and others hooks
   const[pathData,setPathData] = useState()  
   const [display, setDisplay] = useState('hidden')
@@ -13,11 +13,11 @@ function Navbar() {
   const location = useLocation()
   const navigate = useNavigate()
 
-  //On Submit function for Filter form
+  //On Submit function of Filter form
   const onSubmit = (e)=>{
     e.preventDefault()
-    console.log(filterInput)
-    //applyFilter(filterInput)
+    changeFilter(filterInput)
+    toast.info(`Displaying result for ${filterInput}`)
   }
 
   //Function to get the name of the current page/path
@@ -90,7 +90,7 @@ useEffect(()=>{
               <option value="district">District</option>
               <option value="facility">Facility</option>
             </select>
-            <input className='block bg-light border p-2 w-full' id='submit' type="submit" value="Select"/>
+            <input className='block bg-light border p-2 w-full hover:bg-gray-400 hover:text-white' id='submit' type="submit" value="Select"/>
           </form>
       </div>
     </nav>
