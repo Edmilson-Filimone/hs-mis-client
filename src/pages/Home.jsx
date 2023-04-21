@@ -25,7 +25,7 @@ function Home({filter}) {
   const [nFacility, setNFacility] = useState(0)
   const [nFacility_b, setNFacility_b] = useState(0)
   const[newData, setNewData] = useState({total:0, positive:0, prevalence:0})
-  const [oldData, setOldData] = useState({total:0, positive:0, resistant:0})
+  const [oldData, setOldData] = useState({total:0, positive:0, prevalence:0})
  
   //STATES FOR CHARTS & TABLE
   const [rawBarData, setRawBarData] = useState([])
@@ -77,12 +77,11 @@ function Home({filter}) {
         //charts configurations and data
         const bar = useProcessChartData(dataA.data, 'bar', navigate) //Bar
         const line = useProcessChartData(dataB.data, 'line', navigate) //line
-        //como filtrar os dados por admin level???
-        setRawBarData(bar.province)
+        setRawBarData(bar)
         setRawLineData(line)
-        setBarData({data:bar['district'].positive, label:'Positive'}) //initial value
-        setLineData({data:line.totalPositive, label:'Positive'})
-        setTableData(bar['district'])
+        setBarData({data:bar[filter].positive, label:'Incidence'}) //initial value
+        setLineData({data:line.positive, label:'Incidence'})
+        setTableData(bar[filter])
               
       })
   )
@@ -99,10 +98,13 @@ setOldData(useProcessData(query.data))
 const line = useProcessLineChartData(queryLine.data, navigate)
 const bar = useProcessChartData(query.data, 'bar', navigate)
 const table = useProcessChartData(query.data, 'table', navigate)
-setBarData(bar[filter].positive)
+
+setRawBarData(bar)
+setRawLineData(line)
+
+setBarData({data:bar[filter].positive, label:'Incidence'})
 setTableData(table[filter])
-setLineData(line.positive)
-console.log(filter)
+setLineData({data:line.positive, label:'Incidence'})
 }
 
   //USE EFFECT
@@ -122,13 +124,13 @@ const changeData = (category, type) => {
   if(type == 'bar'){
     switch (category) {
       case "Total":
-        setBarData({data: rawBarData.total, label: 'Total'})
+        setBarData({data: rawBarData[filter].total, label: 'Total'})
         break;
       case "Positive":
-        setBarData({data: rawBarData.positive, label: 'Positive'})
+        setBarData({data: rawBarData[filter].positive, label: 'Incidence'})
       break;
       case "Prevalence":
-        setBarData({data: rawBarData.resistant, label: 'Prevalence'})
+        setBarData({data: rawBarData[filter].prevalence, label: 'Prevalence'})
       break;
     }
   }
@@ -136,13 +138,13 @@ const changeData = (category, type) => {
   if(type == 'line'){
     switch (category) {
       case "Total":
-        setLineData({data: rawLineData.totalPerMonth, label: 'Total'})
+        setLineData({data: rawLineData.total, label: 'Total'})
         break;
       case "Positive":
-        setLineData({data: rawLineData.totalPositive, label: 'Positive'})
+        setLineData({data: rawLineData.positive, label: 'Incidence'})
       break;
       case "Prevalence":
-        setLineData({data: rawLineData.totalResistant, label: 'Prevalence'})
+        setLineData({data: rawLineData.prevalence, label: 'Prevalence'})
       break;
     }
   }
@@ -156,11 +158,11 @@ const changeData = (category, type) => {
 
 
 const finalBarData = {
-                labels: barData?.map((it)=> it.name),
+                labels: barData?.data?.map((it)=> it.name),
                 datasets:[
                   {
-                    label:` Result `,
-                    data: barData?.map((it)=> it.value) ,
+                    label:`${barData.label}`,
+                    data: barData?.data?.map((it)=> it.value) ,
                     backgroundColor: 'white',
                     borderColor:'white',
                     borderRadius: Number.MAX_VALUE,
@@ -170,11 +172,11 @@ const finalBarData = {
               }
 
 const finalLineData = {
-                  labels: lineData?.map((it)=> it.month.substring(0,3)),
+                  labels: lineData?.data?.map((it)=> it.month.substring(0,3)),
                   datasets:[
                     {
                       label:` ${lineData[0]?.year} `,
-                      data: lineData?.map((it)=> it.value) ,
+                      data: lineData?.data?.map((it)=> it.value) ,
                       backgroundColor: 'white',
                       borderColor:'white',
                       borderRadius: Number.MAX_VALUE,

@@ -1,4 +1,4 @@
-import { Cog6ToothIcon, HomeIcon, MagnifyingGlassIcon, PowerIcon, UserCircleIcon } from '@heroicons/react/24/solid'
+import { Cog6ToothIcon, HomeIcon, PowerIcon, UserCircleIcon } from '@heroicons/react/24/solid'
 import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router'
 import { auth } from '../../firebase.config'
@@ -17,6 +17,7 @@ function Navbar({changeFilter}) {
   const onSubmit = (e)=>{
     e.preventDefault()
     changeFilter(filterInput)
+    setDisplay('hidden')
     toast.info(`Displaying result for ${filterInput}`)
   }
 
@@ -76,7 +77,7 @@ useEffect(()=>{
           <input className='border-2 bg-transparent p-2.5 rounded-md' type="text" placeholder='Search here'/>
         </form>
         <div className='flex justify-between shrink-0 w-[100px] cursor-pointer'>
-            <UserCircleIcon className={`${onScroll ? 'text-title-color' : 'text-gray-500'}`} width={"20px"} />
+            <UserCircleIcon className={`${onScroll ? 'text-title-color' : 'text-gray-500'}`} width={"20px"} onClick={()=> navigate('/admin')} />
             <Cog6ToothIcon className={`${onScroll ? 'text-title-color' : 'text-gray-500'}`} width={"20px"} onClick={()=>{setDisplay('block')}} />
             <PowerIcon className={`${onScroll ? 'text-title-color' : 'text-gray-500'}  hover:text-red-600`} title='sign out' width={"20px"} onClick={signOut}/>
         </div>

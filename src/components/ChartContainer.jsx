@@ -8,11 +8,11 @@ function ChartContainer({type, data, options, labels, background, changeData}) {
     const chartTitle = ()=>{
       switch (category) {
        case 'Total':
-         return `Total number of samples ${type == 'line' ? 'per month':''}`
+         return `Total number of tested people ${type == 'line' ? 'per month':''}`
        case 'Positive':
-         return `Number of positive samples ${type == 'line' ? 'per month':''}`
-       case 'Resistant':
-           return `Number o resistant samples ${type == 'line' ? 'per month':''}`
+         return `Number of new cases ${type == 'line' ? 'per month':''}`
+       case 'Prevalence':
+           return `Prevalence ${type == 'line' ? 'per month':''}`
       }
      }
 
@@ -28,9 +28,9 @@ function ChartContainer({type, data, options, labels, background, changeData}) {
             <p className='mb-4 text-text-color font-thin'>Lorem ipsum dolor sit amet consectetur adipisicing elit.vel! Nem</p>
           <div className={`${navigationBar.display} w-full`}>
               <ul className='flex mx-auto gap-2 md:gap-6 w-fit font-thin text-text-color'>
-                  <li className={`${category == 'Total' ? 'font-bold':''} px-3 md:px-5 cursor-pointer nav-chart`} onClick={()=> {changeData('Total', type); setCategory('Total')}}>Total</li>
-                  <li className={`${category == 'Positive' ? 'font-bold':''} border-x-2 px-3 md:px-5 cursor-pointer nav-chart`} onClick={()=> {changeData('Positive', type); setCategory('Positive')}}>Positves</li>
-                  <li className={`${category == 'Resistant' ? 'font-bold':''} px-3 md:px-5 cursor-pointer nav-chart`} onClick={()=>{changeData('Resistant', type); setCategory('Resistant')}}>Resistants</li>
+                  <li className={`${category == 'Total' ? 'font-bold':''} px-3 md:px-5 cursor-pointer nav-chart`} onClick={()=> {changeData('Total', type); setCategory('Total')}}>Tested</li>
+                  <li className={`${category == 'Positive' ? 'font-bold':''} border-x-2 px-3 md:px-5 cursor-pointer nav-chart`} onClick={()=> {changeData('Positive', type); setCategory('Positive')}}>Incidence</li>
+                  <li className={`${category == 'Prevalence' ? 'font-bold':''} px-3 md:px-5 cursor-pointer nav-chart`} onClick={()=>{changeData('Prevalence', type); setCategory('Prevalence')}}>Prevalence</li>
               </ul>
           </div>
         </div>}
