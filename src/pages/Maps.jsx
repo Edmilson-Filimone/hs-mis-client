@@ -156,12 +156,12 @@ const styleColor = (feature) => {
       <div className="xl:absolute bottom-20 right-10 min-w-[250px] min-h-[300px] p-4 bg-[rgba(0,0,0,0.45)] border-black rounded-lg z-50">
         <h3 className='text-white font-semibold text-lg text-left my-4'>{`${testData.features[0].properties.Metric}`}</h3>
         <ul>
-          <li className="text-white my-2"><span className={`inline-block mr-5 w-[20px] h-[20px] rounded-full bg-[${intervalA.color}]`}></span>0 - {((intervalA.value - 0.1).toFixed(1))}</li>
-          <li className="text-white my-2"><span className={`inline-block mr-5 w-[20px] h-[20px] rounded-full bg-[${intervalB.color}]`}></span>{((intervalA.value).toFixed(1))} - {(intervalB.value - 1).toFixed(1)}</li>
-          <li className="text-white my-2"><span className={`inline-block mr-5 w-[20px] h-[20px] rounded-full bg-[${intervalC.color}]`}></span>{((intervalB.value).toFixed(1))} - {(intervalC.value - 1).toFixed(1)}</li>
-          <li className="text-white my-2"><span className={`inline-block mr-5 w-[20px] h-[20px] rounded-full bg-[${intervalD.color}]`}></span>{((intervalC.value).toFixed(1))} - {(intervalD.value - 1).toFixed(1)}</li>
-          <li className="text-white my-2"><span className={`inline-block mr-5 w-[20px] h-[20px] rounded-full bg-[${intervalE.color}]`}></span>{((intervalD.value).toFixed(1))} - {(intervalE.value - 1).toFixed(1)}</li>
-          <li className="text-white my-2"><span className={`inline-block mr-5 w-[20px] h-[20px] rounded-full bg-[${intervalD.color}]`}></span> {'>='} {((intervalE.value).toFixed(1))}</li>
+          <li className="text-white my-2"><span className={`inline-block mr-5 w-[20px] h-[20px] rounded-full bg-[#fee5d9]`}></span>0 - {((intervalA.value - 0.1).toFixed(1))}</li>
+          <li className="text-white my-2"><span className={`inline-block mr-5 w-[20px] h-[20px] rounded-full bg-[#fcbba1]`}></span>{((intervalA.value).toFixed(1))} - {(intervalB.value - 1).toFixed(1)}</li>
+          <li className="text-white my-2"><span className={`inline-block mr-5 w-[20px] h-[20px] rounded-full bg-[#fc9272]`}></span>{((intervalB.value).toFixed(1))} - {(intervalC.value - 1).toFixed(1)}</li>
+          <li className="text-white my-2"><span className={`inline-block mr-5 w-[20px] h-[20px] rounded-full bg-[#fb6a4a]`}></span>{((intervalC.value).toFixed(1))} - {(intervalD.value - 1).toFixed(1)}</li>
+          <li className="text-white my-2"><span className={`inline-block mr-5 w-[20px] h-[20px] rounded-full bg-[#de2d26]`}></span>{((intervalD.value).toFixed(1))} - {(intervalE.value - 1).toFixed(1)}</li>
+          <li className="text-white my-2"><span className={`inline-block mr-5 w-[20px] h-[20px] rounded-full bg-[#a50f15]`}></span> {'>='} {((intervalE.value).toFixed(1))}</li>
         </ul>
       </div>
     </section>
