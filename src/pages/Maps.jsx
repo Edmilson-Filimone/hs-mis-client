@@ -5,8 +5,10 @@ import { MapContainer, TileLayer, GeoJSON , Marker, Popup, Tooltip } from 'react
 import Loading from "../components/Loading"
 import {geoData} from '../../public/Js/geoData'
 import {testData} from '../../public/Js/mockMapData'
+import { data as mapData } from "../../public/Js/mockData"
 import { DataFrame } from 'danfojs/dist/danfojs-base'
 import { toJSONBrowser } from 'danfojs/dist/danfojs-base/io/browser'
+import useJoinLayerAndData from "../hooks/useJoinLayerAndData"
 
 function Maps() {
   /*Solution from : https://fmuchembi.medium.com/let-us-build-a-choropleth-map-using-react-leaflet-together-3245d30ac900*/
@@ -18,8 +20,13 @@ function Maps() {
   //const [onSelectFeature, setOnSelectFeature] = useState({})
 // const baseUrl = `http://localhost:8080/facility?max=100`
 
+
+//Joining Data to Layer map (GeoJSON)
+let layer = {...geoData}
+useJoinLayerAndData(mapData, layer)
+
 //Dataframe - calculating max value to use as reference to create values intervals for color ramp classification
-const df = new DataFrame(testData.features.map((data)=>data.properties))
+const df = new DataFrame(layer.features.map((data)=>data.properties))
 const maxValue = df['Value'].max()
 const {intervalA,intervalB, intervalC, intervalD, intervalE} = {
                         intervalA:{color:'#fcbba1', value: parseFloat((0.2 * maxValue).toFixed(2))},
@@ -30,9 +37,8 @@ const {intervalA,intervalB, intervalC, intervalD, intervalE} = {
                       }
 
 
-
 //Getting each feature --- not using now
-const feature = geoData.features.map((feature)=>{
+const feature = layer.features.map((feature)=>{
   return feature
 })
 
@@ -78,7 +84,25 @@ const styleColor = (feature) => {
     fillOpacity: 1
 });
 }
+
+const secondLayerStyle = {
+                          fillColor: 'rgba(0,0,0,0)',
+                          weight: 2,
+                          opacity: 1,
+                          color: 'black',
+                          dashArray: '1',
+                          fillOpacity: 1
+}
  
+
+const thirdLayerStyle = {
+                          fillColor: 'rgba(0,0,0,0)',
+                          weight: 1,
+                          opacity: 1,
+                          color: 'black',
+                          dashArray: '1',
+                          fillOpacity: 0
+}
 
 //On Mouse Hover Feature
   const onMouseIn = (e) => {
@@ -114,8 +138,8 @@ const styleColor = (feature) => {
       mouseover:onMouseIn,
       mouseout:onMouseOut
     })
-    layer.bindTooltip(`${feature.properties.ADM1_PT} - ${Math.floor(feature.properties.Value)}`)
-    layer.bindPopup(`${feature.properties.ADM1_PT} - ${Math.floor(feature.properties.Value)}`)
+    layer.bindTooltip(`${feature.properties.ADM2_PT} - ${Math.floor(feature.properties.Value)}`)
+    layer.bindPopup(`${feature.properties.ADM2_PT} - ${Math.floor(feature.properties.Value)}`)
   }
   //Function to getData
   /*const getData = async ()=> {
@@ -150,7 +174,9 @@ const styleColor = (feature) => {
              attribution="Map tiles by Carto, under CC BY 3.0. Data by OpenStreetMap, under ODbL."
              url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png"
           />
-          <GeoJSON data={featureTest} onEachFeature={onEachFeature} style={styleColor}/>
+          <GeoJSON data={feature} onEachFeature={onEachFeature} style={styleColor}/>
+          <GeoJSON data={featureTest}  style={secondLayerStyle}/>
+          <GeoJSON data={feature} onEachFeature={onEachFeature} style={thirdLayerStyle}/>
         </MapContainer>
       </div>
       <div className="xl:absolute bottom-20 right-10 min-w-[250px] min-h-[300px] p-4 bg-[rgba(0,0,0,0.45)] border-black rounded-lg z-50">
