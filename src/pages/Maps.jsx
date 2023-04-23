@@ -21,6 +21,15 @@ function Maps() {
 //Dataframe - calculating max value to use as reference to create values intervals for color ramp classification
 const df = new DataFrame(testData.features.map((data)=>data.properties))
 const maxValue = df['Value'].max()
+const {intervalA,intervalB, intervalC, intervalD, intervalE} = {
+                        intervalA:{color:'#fcbba1', value: parseFloat((0.2 * maxValue).toFixed(2))},
+                        intervalB:{color:'#fc9272', value: parseFloat((0.4 * maxValue).toFixed(2))},
+                        intervalC:{color:'#fb6a4a', value: parseFloat((0.6 * maxValue).toFixed(2))},
+                        intervalD:{color:'#de2d26', value: parseFloat((0.8 * maxValue).toFixed(2))},
+                        intervalE:{color:'#a50f15', value: parseFloat((0.9 * maxValue).toFixed(2))}
+                      }
+
+
 
 //Getting each feature --- not using now
 const feature = geoData.features.map((feature)=>{
@@ -34,25 +43,25 @@ const featureTest = testData.features.map((feature)=>{
 
 //Color Ramp - classification by color
 const mapPolygonColorClassification=(value => {
-  let color = '#fee5d9';
+  let color = '';
   switch (true) {
-    case (value >= 0.9 * maxValue):
-      color = '#a50f15'
+    case (value >= intervalE.value):
+      color = intervalE.color
       break;
-    case (value > 0.8 * maxValue):
-      color = '#de2d26'
+    case (value >= intervalD.value && value < intervalE.value):
+      color = intervalD.color
       break
-    case (value > 0.6 * maxValue):
-      color = '#fb6a4a'
+    case (value >= intervalC.value && value < intervalD.value):
+      color = intervalC.color
       break
-    case (value > 0.4 * maxValue):
-      color = '#fc9272'
+    case (value >= intervalB.value && value < intervalC.value):
+      color = intervalB.color
       break
-    case (value > 0.2 * maxValue):
-      color = '#fcbba1'
+    case (value >= intervalA.value && value < intervalB.value):
+      color = intervalA.color
       break
     default:
-      color:'#fee5d9';
+      color = '#fee5d9';
       break;
   }
   return color
@@ -64,9 +73,9 @@ const styleColor = (feature) => {
     fillColor: mapPolygonColorClassification(feature.properties.Value),
     weight: 1,
     opacity: 1,
-    color: 'white',
+    color: 'black',
     dashArray: '1',
-    fillOpacity: 0.6
+    fillOpacity: 1
 });
 }
  
@@ -105,6 +114,8 @@ const styleColor = (feature) => {
       mouseover:onMouseIn,
       mouseout:onMouseOut
     })
+    layer.bindTooltip(`${feature.properties.ADM1_PT} - ${Math.floor(feature.properties.Value)}`)
+    layer.bindPopup(`${feature.properties.ADM1_PT} - ${Math.floor(feature.properties.Value)}`)
   }
   //Function to getData
   /*const getData = async ()=> {
@@ -141,6 +152,17 @@ const styleColor = (feature) => {
           />
           <GeoJSON data={featureTest} onEachFeature={onEachFeature} style={styleColor}/>
         </MapContainer>
+      </div>
+      <div className="xl:absolute bottom-20 right-10 min-w-[250px] min-h-[300px] p-4 bg-[rgba(0,0,0,0.45)] border-black rounded-lg z-50">
+        <h3 className='text-white font-semibold text-lg text-left my-4'>{`${testData.features[0].properties.Metric}`}</h3>
+        <ul>
+          <li className="text-white my-2"><span className={`inline-block mr-5 w-[20px] h-[20px] rounded-full bg-[${intervalA.color}]`}></span>0 - {((intervalA.value - 0.1).toFixed(1))}</li>
+          <li className="text-white my-2"><span className={`inline-block mr-5 w-[20px] h-[20px] rounded-full bg-[${intervalB.color}]`}></span>{((intervalA.value).toFixed(1))} - {(intervalB.value - 1).toFixed(1)}</li>
+          <li className="text-white my-2"><span className={`inline-block mr-5 w-[20px] h-[20px] rounded-full bg-[${intervalC.color}]`}></span>{((intervalB.value).toFixed(1))} - {(intervalC.value - 1).toFixed(1)}</li>
+          <li className="text-white my-2"><span className={`inline-block mr-5 w-[20px] h-[20px] rounded-full bg-[${intervalD.color}]`}></span>{((intervalC.value).toFixed(1))} - {(intervalD.value - 1).toFixed(1)}</li>
+          <li className="text-white my-2"><span className={`inline-block mr-5 w-[20px] h-[20px] rounded-full bg-[${intervalE.color}]`}></span>{((intervalD.value).toFixed(1))} - {(intervalE.value - 1).toFixed(1)}</li>
+          <li className="text-white my-2"><span className={`inline-block mr-5 w-[20px] h-[20px] rounded-full bg-[${intervalD.color}]`}></span> {'>='} {((intervalE.value).toFixed(1))}</li>
+        </ul>
       </div>
     </section>
 
