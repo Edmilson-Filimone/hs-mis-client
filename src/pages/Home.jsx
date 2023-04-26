@@ -1,8 +1,9 @@
-import { ChartBarIcon, HomeModernIcon, UserPlusIcon } from '@heroicons/react/24/solid'
 import React, { useEffect, useState } from 'react'
 import { useNavigate} from 'react-router-dom'
 import Card from '../components/Card'
-import {FaBiohazard} from 'react-icons/fa'
+import { ChartBarIcon, UserPlusIcon } from '@heroicons/react/24/solid'
+import {GiMedicines} from 'react-icons/gi'
+import {MdOutlinePregnantWoman} from 'react-icons/md'
 import useProcessData from '../hooks/useProcessData'
 import ChartContainer from '../components/ChartContainer'
 import { barOps, lineOps } from '/public/Js/chartOptions'
@@ -201,10 +202,10 @@ const onSubmit = (e)=>{
     <section>
       <span className='bg-white py-1 px-2 rounded-md shadow-md md:float-right text-sm text-text-color cursor-context-menu' title='Date'><span className='capitalize'>{filter}</span>{` • ${MonthYear.month} - ${MonthYear.year}`}</span>
       <section className="grid gap-5 md:w-fit xl:w-full md:grid-cols-2 xl:flex xl:justify-between xl:mx-auto max-w-[2400px]">
-        <Card label={'Prevalence (%)'} value={newData.prevalence} balance={newData.prevalence - oldData.prevalence} icon={<HomeModernIcon width={"25px"}/>} iconBg={'bg-dark'}/>
-        <Card label={'Incidence'} value={newData.positive} balance={newData.positive-oldData.positive} icon={<ChartBarIcon width={"25px"}/>} iconBg={'bg-blue'}/>
-        <Card label={'Mother to Child cases'} value={5} balance={3} icon={<UserPlusIcon width={"25px"}/>} iconBg={'bg-green'}/>
-        <Card label={'People in TARV'} value={32} balance={22} icon={<FaBiohazard className='text-2xl'/>} iconBg={'bg-pink'}/>
+        <Card label={'Prevalence (%)'} value={newData.prevalence} balance={newData.prevalence - oldData.prevalence} icon={<ChartBarIcon width={"25px"}/>} iconBg={'bg-dark'}/>
+        <Card label={'Incidence'} value={newData.positive} balance={newData.positive-oldData.positive} icon={<UserPlusIcon width={"25px"}/>} iconBg={'bg-blue'}/>
+        <Card label={'Mother to Child cases'} value={5} balance={3} icon={<MdOutlinePregnantWoman className='text-2xl' />} iconBg={'bg-green'}/>
+        <Card label={'People in ART'} value={32} balance={22} icon={<GiMedicines className='text-2xl'/>} iconBg={'bg-pink'}/>
       </section>
       {!isBusy && <section className= 'my-6 flex flex-wrap space-y-10 xl:space-y-0 gap-5 xl:flex-nowrap xl:mx-auto max-w-[2400px]'>
         <ChartContainer type='bar' data={finalBarData} options={barOps} background='bg-blue' changeData={changeData}/>

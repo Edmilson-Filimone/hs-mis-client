@@ -3,6 +3,8 @@ import {ArrowRightOnRectangleIcon, ClipboardDocumentListIcon, MapPinIcon, Questi
 import {HiMenuAlt3} from 'react-icons/hi'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { AiOutlineClose } from 'react-icons/ai'
+import { MdOutlinePregnantWoman } from 'react-icons/md'
+import { GiMedicines } from 'react-icons/gi'
 
 function Sidebar({layout}) {
   
@@ -47,7 +49,15 @@ const [showMenu, setShowMenu] = useState(false)
           </li>
           <li className={`sidebar-item ${location('report')?'bg-blue hover:bg-blue shadow-2xl font-semibold':'bg-transparent font-thin'}`} onClick={()=>{navigate('/report'); setShowMenu(false)}}>
             <ClipboardDocumentListIcon className={collapse? 'sidebar-collapsed-icon' : 'sidebar-icon'}/>
-            <span className={collapse ? 'hidden': ''}>Monthly Report</span>
+            <span className={collapse ? 'hidden': ''}>Test coverage</span>
+          </li>
+          <li className={`sidebar-item ${location('vertical-transmission')?'bg-blue hover:bg-blue shadow-2xl font-semibold':'bg-transparent font-thin'}`} onClick={()=>{navigate('/vertical-transmission'); setShowMenu(false)}}>
+            <MdOutlinePregnantWoman className={collapse? 'sidebar-collapsed-icon text-2xl' : 'sidebar-icon text-2xl'}/>
+            <span className={collapse ? 'hidden': ''}>Vertical transmission</span>
+          </li>
+          <li className={`sidebar-item ${location('art')?'bg-blue hover:bg-blue shadow-2xl font-semibold':'bg-transparent font-thin'}`} onClick={()=>{navigate('/art'); setShowMenu(false)}}>
+            <GiMedicines className={collapse? 'sidebar-collapsed-icon text-2xl' : 'sidebar-icon text-2xl'}/>
+            <span className={collapse ? 'hidden': ''}>ART coverage</span>
           </li>
           <li className={`sidebar-item ${location('map')?'bg-blue hover:bg-blue shadow-2xl font-semibold':'bg-transparent font-thin'}`} onClick={()=>{navigate('/map') ; setShowMenu(false)}}>
             <MapPinIcon className={collapse? 'sidebar-collapsed-icon' : 'sidebar-icon'}/>
