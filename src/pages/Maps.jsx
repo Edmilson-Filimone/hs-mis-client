@@ -9,6 +9,7 @@ import { data as mapData, provinceData } from "../../public/Js/mockData"
 import { DataFrame } from 'danfojs/dist/danfojs-base'
 import { toJSONBrowser } from 'danfojs/dist/danfojs-base/io/browser'
 import useJoinLayerAndData from "../hooks/useJoinLayerAndData"
+import { AiOutlineClose } from "react-icons/ai"
 
 function Maps({filter}) {
   /*Solution from : https://fmuchembi.medium.com/let-us-build-a-choropleth-map-using-react-leaflet-together-3245d30ac900*/
@@ -17,6 +18,7 @@ function Maps({filter}) {
   const [data, setData] = useState([])
   const [isBusy, setIsBusy] = useState(true)
   const [onSelectFeature, setOnSelectFeature] = useState({})
+  const [closePopup, setClosePopup] = useState('')
   //const [layer, setLayer] = useState({...testData})
   //const [onSelectFeature, setOnSelectFeature] = useState({})
 // const baseUrl = `http://localhost:8080/facility?max=100`
@@ -154,6 +156,11 @@ const thirdLayerStyle = {
       mouseover:onMouseIn,
       mouseout:onMouseOut
     })
+    if(filter == 'province'){
+      layer.bindTooltip(`${feature.properties.ADM1_PT} - ${Math.floor(feature.properties.Value)}`)
+      layer.bindPopup(`${feature.properties.ADM1_PT} - ${Math.floor(feature.properties.Value)}`)
+      return
+    }
     layer.bindTooltip(`${feature.properties.ADM2_PT} - ${Math.floor(feature.properties.Value)}`)
     layer.bindPopup(`${feature.properties.ADM2_PT} - ${Math.floor(feature.properties.Value)}`)
   }
@@ -183,6 +190,10 @@ const thirdLayerStyle = {
   return (
   <>
     <section>
+      <div className={`w-fit ${closePopup} flex justify-between gap-5 items-center bg-sky-100 mb-4 p-1.5 border rounded-lg text-blue text-sm cursor-pointer`} title="Click to close" onClick={()=> setClosePopup('hidden')}>
+        <span>The map may be lazy to load data, so pass the mouse over the map or click the map to refresh</span>
+        <AiOutlineClose/>
+      </div>
       <div className="text-2xl text-center font-semibold"></div>
       <div className="sticky top-24 w-full h-[450px] lg:h-[660px] overflow-hidden rounded-lg shadow-lg border">
         <MapContainer center={[-19, 35]} zoom={5} scrollWheelZoom={true} style={{ height: "100%", width: "100%" }}>
@@ -195,7 +206,7 @@ const thirdLayerStyle = {
           {filter != 'province' ? (<GeoJSON data={feature} onEachFeature={onEachFeature} style={thirdLayerStyle}/>) : '' }
         </MapContainer>
       </div>
-      <div className="xl:absolute bottom-20 right-10 min-w-[250px] min-h-[300px] p-4 bg-[rgba(0,0,0,0.45)] border-black rounded-lg z-50">
+      <div className="my-5 xl:absolute bottom-20 right-10 min-w-[250px] min-h-[300px] p-4 bg-[rgba(0,0,0,0.7)] xl:bg-[rgba(0,0,0,0.45)] border-black rounded-lg z-50">
         <h3 className='text-white font-semibold text-lg text-left my-4'>{`${testData.features[0].properties.Metric}`}</h3>
         <ul>
           <li className="text-white my-2"><span className={`inline-block mr-5 w-[20px] h-[20px] rounded-full bg-[#fee5d9]`}></span>0 - {((intervalA.value - 0.1).toFixed(1))}</li>

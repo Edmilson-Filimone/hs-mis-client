@@ -93,6 +93,7 @@ useEffect(()=>{
         <h4 className='font-bold text-title-color text-center mb-10 border-b pb-6'>Apply Filter</h4>
           <form className='flex flex-col gap-4' onSubmit={onSubmit}>
             <select className='text-text-color bg-white p-1.5 border mb-4' name="filter" id="filter" onChange={(e)=> setFilterInput(e.target.value)}>
+              <option value="">Select Filter</option>
               <option value="province">Province</option>
               <option value="district">District</option>
               <option value="facility">Facility</option>

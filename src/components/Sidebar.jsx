@@ -33,7 +33,7 @@ const [showMenu, setShowMenu] = useState(false)
   return (
     <aside className='sticky top-4 z-50 bg-sidebar md:min-h-[95vh] p-4 rounded-xl'>
       <div className='flex justify-between'>
-        {!collapse && <div className='w-full md:h-28 md:text-2xl text-white md:text-center md:p-8 font-bold shadow-sm'>MTB-MIS</div>}
+        {!collapse && <div className='w-full md:h-28 md:text-2xl text-white md:text-center md:p-8 font-bold shadow-sm'>HS-MIS</div>}
         <button className='md:hidden' onClick={()=> setShowMenu(!showMenu)}>
           {!showMenu && <HiMenuAlt3 className='text-white text-2xl'/>}
           {showMenu && <AiOutlineClose className='text-white text-2xl' />}
