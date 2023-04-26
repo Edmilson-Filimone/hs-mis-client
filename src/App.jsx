@@ -39,7 +39,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home filter={filter}/>}></Route>
           <Route path="/report" element={<Report/>}></Route>
-          <Route path="/map" element={<Maps/>}></Route>
+          <Route path="/map" element={<Maps filter={filter}/>}></Route>
           <Route path="/sign-in" element={<Login/>}></Route>
           <Route path="/add-facility" element={<PrivateRoute/>}>
             <Route path="/add-facility" element={<RegistFacility/>}/>

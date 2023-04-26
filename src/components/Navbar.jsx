@@ -19,6 +19,12 @@ function Navbar({changeFilter}) {
     changeFilter(filterInput)
     setDisplay('hidden')
     toast.info(`Displaying result for ${filterInput}`)
+   
+    //An "adjustment" for map page only - because map does not re-render when filter is changed, 
+    //So we make a redirection to "Redirect component" that will redirect again to map page
+    if(location.pathname == '/map'){
+      navigate('/redirect')
+    }
   }
 
   //Function to get the name of the current page/path

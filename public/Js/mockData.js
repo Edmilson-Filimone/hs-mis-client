@@ -1286,3 +1286,72 @@ export const data = [
         "Value": 36.8025042494177
     }
 ]
+
+export const provinceData = [
+    {
+        "ADM1_PT": "Inhambane",
+        "ADM1_PCODE": "MZ03",
+        "Metric": "Prevalence",
+        "Value": 41.3961567583363
+    },
+    {
+        "ADM1_PT": "Maputo City",
+        "ADM1_PCODE": "MZ06",
+        "Metric": "Prevalence",
+        "Value": 34.594201368329
+    },
+    {
+        "ADM1_PT": "Gaza",
+        "ADM1_PCODE": "MZ02",
+        "Metric": "Prevalence",
+        "Value": 70.5233105866139
+    },
+    {
+        "ADM1_PT": "Maputo",
+        "ADM1_PCODE": "MZ05",
+        "Metric": "Prevalence",
+        "Value": 14.8903842399137
+    },
+    {
+        "ADM1_PT": "Sofala",
+        "ADM1_PCODE": "MZ09",
+        "Metric": "Prevalence",
+        "Value": 8.50803565200111
+    },
+    {
+        "ADM1_PT": "Zambezia",
+        "ADM1_PCODE": "MZ11",
+        "Metric": "Prevalence",
+        "Value": 58.5938227503331
+    },
+    {
+        "ADM1_PT": "Cabo Delgado",
+        "ADM1_PCODE": "MZ01",
+        "Metric": "Prevalence",
+        "Value": 79.9852432743243
+    },
+    {
+        "ADM1_PT": "Nampula",
+        "ADM1_PCODE": "MZ07",
+        "Metric": "Prevalence",
+        "Value": 12.1228854597797
+    },
+    {
+        "ADM1_PT": "Niassa",
+        "ADM1_PCODE": "MZ08",
+        "Metric": "Prevalence",
+        "Value": 91.9690043400222
+    },
+    {
+        "ADM1_PT": "Manica",
+        "ADM1_PCODE": "MZ04",
+        "Metric": "Prevalence",
+        "Value": 19.8748404529069
+    },
+    {
+        "ADM1_PT": "Tete",
+        "ADM1_PCODE": "MZ10",
+        "Metric": "Prevalence",
+        "Value": 36.8025042494177
+    }
+]

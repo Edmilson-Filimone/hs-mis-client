@@ -5,29 +5,45 @@ import { MapContainer, TileLayer, GeoJSON , Marker, Popup, Tooltip } from 'react
 import Loading from "../components/Loading"
 import {geoData} from '../../public/Js/geoData'
 import {testData} from '../../public/Js/mockMapData'
-import { data as mapData } from "../../public/Js/mockData"
+import { data as mapData, provinceData } from "../../public/Js/mockData"
 import { DataFrame } from 'danfojs/dist/danfojs-base'
 import { toJSONBrowser } from 'danfojs/dist/danfojs-base/io/browser'
 import useJoinLayerAndData from "../hooks/useJoinLayerAndData"
 
-function Maps() {
+function Maps({filter}) {
   /*Solution from : https://fmuchembi.medium.com/let-us-build-a-choropleth-map-using-react-leaflet-together-3245d30ac900*/
   //states and routes
   const navigate = useNavigate()
   const [data, setData] = useState([])
   const [isBusy, setIsBusy] = useState(true)
   const [onSelectFeature, setOnSelectFeature] = useState({})
+  //const [layer, setLayer] = useState({...testData})
   //const [onSelectFeature, setOnSelectFeature] = useState({})
 // const baseUrl = `http://localhost:8080/facility?max=100`
 
 
-//Joining Data to Layer map (GeoJSON)
-let layer = {...geoData}
-useJoinLayerAndData(mapData, layer)
+// Joining Data to Layer map (GeoJSON)
+let layer = filter == "province"? {...testData} : {...geoData}
+useEffect(()=>{
+  // If filter is province use province layer, else use district layer (default)
+  switch (filter) {
+    case "province":
+      layer = {...testData}
+      useJoinLayerAndData(provinceData, layer, filter)
+      console.log('On Map component - ', filter)
+      break;
+    default:
+      layer = {...geoData}
+      useJoinLayerAndData(mapData, layer, filter)
+      console.log('On Map component - ', filter)
+      break;
+  }
+}, 
+[filter])
 
 //Dataframe - calculating max value to use as reference to create values intervals for color ramp classification
 const df = new DataFrame(layer.features.map((data)=>data.properties))
-const maxValue = df['Value'].max()
+const maxValue = df['Value']?.max()
 const {intervalA,intervalB, intervalC, intervalD, intervalE} = {
                         intervalA:{color:'#fcbba1', value: parseFloat((0.2 * maxValue).toFixed(2))},
                         intervalB:{color:'#fc9272', value: parseFloat((0.4 * maxValue).toFixed(2))},
@@ -175,8 +191,8 @@ const thirdLayerStyle = {
              url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png"
           />
           <GeoJSON data={feature} onEachFeature={onEachFeature} style={styleColor}/>
-          <GeoJSON data={featureTest}  style={secondLayerStyle}/>
-          <GeoJSON data={feature} onEachFeature={onEachFeature} style={thirdLayerStyle}/>
+          {filter != 'province' ? (<GeoJSON data={featureTest}  style={secondLayerStyle}/>) : ''}
+          {filter != 'province' ? (<GeoJSON data={feature} onEachFeature={onEachFeature} style={thirdLayerStyle}/>) : '' }
         </MapContainer>
       </div>
       <div className="xl:absolute bottom-20 right-10 min-w-[250px] min-h-[300px] p-4 bg-[rgba(0,0,0,0.45)] border-black rounded-lg z-50">
