@@ -61,7 +61,7 @@ const [showMenu, setShowMenu] = useState(false)
           </li>
           <li className={`sidebar-item ${location('map')?'bg-blue hover:bg-blue shadow-2xl font-semibold':'bg-transparent font-thin'}`} onClick={()=>{navigate('/map') ; setShowMenu(false)}}>
             <MapPinIcon className={collapse? 'sidebar-collapsed-icon' : 'sidebar-icon'}/>
-            <span className={collapse ? 'hidden': ''}>Map</span>
+            <span className={collapse ? 'hidden': ''}>Geospatial Analysis</span>
           </li>
           <li className={`sidebar-item ${location('admin')?'bg-blue hover:bg-blue shadow-2xl font-semibold':'bg-transparent font-thin'}`} onClick={()=>{navigate('/admin') ; setShowMenu(false)}}>
             <UserIcon className={collapse? 'sidebar-collapsed-icon' : 'sidebar-icon'}/>
